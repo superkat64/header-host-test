@@ -1,6 +1,16 @@
-const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+
+let mode = 'development';
+let target = 'web';
+
+if (process.env.NODE_ENV === 'production') {
+  mode = 'production';
+  target = 'browserslist';
+}
+
 module.exports = {
+  mode: mode,
+  target: target,
   entry: './src/app.tsx',
   module: {
     rules: [
@@ -30,8 +40,20 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        test: /\.(s[ac]|c)ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                hideNothingWarning: true
+              }
+            }
+          },
+          'sass-loader'
+        ]
       },
       {
         test: /\.svg$/,
