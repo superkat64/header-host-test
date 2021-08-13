@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Logo, Button} from '@customink/pigment-react';
+
+import './styles/index.scss';
+
 const App = () => {
   return (
     <div className="App">
@@ -11,14 +14,16 @@ const App = () => {
           onClick={() => {}}
           className="App-logo"
         />
+      </header>
+      <div>
         <Button
           onClick={() => {
             window.location.href = 'https://reactjs.org';
           }}
-          variant={'link'}>
+          variant="primary">
           Learn React
         </Button>
-      </header>
+      </div>
     </div>
   );
 };
