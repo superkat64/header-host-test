@@ -1,4 +1,4 @@
-# Browsers we support via Babel, Autoprefixer etc.
+# Browsers we support via Autoprefixer
 last 2 versions
 > 0.5%
 IE 11
