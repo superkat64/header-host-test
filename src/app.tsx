@@ -1,6 +1,4 @@
 import React from 'react';
-import {Button} from '@customink/pigment-react';
-
 import './styles/index.scss';
 
 // @ts-ignore
@@ -11,14 +9,5 @@ export default () => (
     <React.Suspense fallback="Loading header...">
       <RemoteHeader />
     </React.Suspense>
-    <div>
-      <Button
-        onClick={() => {
-          window.location.href = 'https://reactjs.org';
-        }}
-        variant="primary">
-        Learn React
-      </Button>
-    </div>
   </div>
 );

@@ -1,7 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const { ModuleFederationPlugin } = require("webpack").container;
-const path = require("path");
-const deps = require("./package.json").dependencies;
+const { ModuleFederationPlugin } = require('webpack').container;
+const path = require('path');
+const deps = require('./package.json').dependencies;
 
 let mode = 'development';
 let target = 'web';
@@ -15,7 +15,7 @@ module.exports = {
   mode: mode,
   target: target,
   entry: {
-    main: './src/index.tsx'
+    main: './src/index.ts'
   },
   module: {
     rules: [
@@ -78,17 +78,18 @@ module.exports = {
       name: 'header_host_test',
       library: { type: 'var', name: 'header_host_test' },
       remotes: {
-        ci_modular_header: 'ci_modular_header@http://localhost:3000/remoteEntry.js',
+        ci_modular_header: 'ci_modular_header',
       },
       shared: {
+        ...deps,
         react: { 
           singleton: true,
-          eager: true, 
+          // eager: true, 
           requiredVersion: deps.react
         }, 
         'react-dom': { 
           singleton: true,
-          eager: true,
+          // eager: true,
           requiredVersion: deps['react-dom']
         }
       }
