@@ -1,6 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
-const path = require('path');
 const deps = require('./package.json').dependencies;
 
 let mode = 'development';
@@ -14,9 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   mode: mode,
   target: target,
-  entry: {
-    main: './src/index.ts'
-  },
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
@@ -30,9 +27,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              ['@babel/preset-env', { targets: "defaults" }]
-            ]
+            presets: [['@babel/preset-env', {targets: 'defaults'}]]
           }
         }
       },
@@ -61,35 +56,28 @@ module.exports = {
         ]
       },
       {
-        test: /\.svg$/,
+        test: /\.(svg|png)$/,
         type: 'asset/resource'
       }
     ]
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'header_host_test',
-      library: { type: 'var', name: 'header_host_test' },
+      filename: 'remoteEntry.js',
       remotes: {
-        ci_modular_header: 'ci_modular_header',
+        ci_modular_header: 'ci_modular_header@http://localhost:3000/remoteEntry.js',
       },
-      shared: {
-        ...deps,
+      exposes: {},
+      shared: { 
         react: { 
           singleton: true,
-          // eager: true, 
+          eager: true, 
           requiredVersion: deps.react
         }, 
         'react-dom': { 
           singleton: true,
-          // eager: true,
+          eager: true,
           requiredVersion: deps['react-dom']
         }
       }
@@ -99,5 +87,11 @@ module.exports = {
       filename: './index.html'
     })
   ],
-  devServer: { contentBase: path.join(__dirname, 'dist'), port: 8080, hot: true }
+  devServer: {
+    hot: true, port: 8080
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  }
 };
+

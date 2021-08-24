@@ -2,12 +2,11 @@ import React from 'react';
 import './styles/index.scss';
 
 // @ts-ignore
-const RemoteHeader = React.lazy(() => import('ci_modular_header/Header'));
+import RemoteHeader from 'ci_modular_header/Header';
 
 export default () => (
   <div className="App">
-    <React.Suspense fallback="Loading header...">
-      <RemoteHeader />
-    </React.Suspense>
+    <h1>Header Host Test</h1>
+    <RemoteHeader />
   </div>
 );
