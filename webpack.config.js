@@ -65,9 +65,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'header_host_test',
       filename: 'remoteEntry.js',
-      remotes: {
-        ci_modular_header: 'ci_modular_header@http://localhost:3000/remoteEntry.js',
-      },
+      remotes: {},
       exposes: {},
       shared: { 
         react: { 
@@ -79,7 +77,7 @@ module.exports = {
           singleton: true,
           eager: true,
           requiredVersion: deps['react-dom']
-        }
+        },
       }
     }),
     new HtmlWebPackPlugin({
